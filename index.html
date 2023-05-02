@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>Life Remaining Widget</title>
+	<style>
+		.container {
+			display: flex;
+			flex-direction: column;
+			align-items: center;
+			font-family: Arial, sans-serif;
+		}
+
+		.percentage {
+			font-size: 5rem;
+			font-weight: bold;
+			color: #333;
+			margin-bottom: 0.5rem;
+		}
+
+		.label {
+			font-size: 1.5rem;
+			color: #999;
+			margin-bottom: 1rem;
+		}
+	</style>
+</head>
+<body>
+	<div class="container">
+		<div class="percentage" id="percentage"></div>
+		<div class="label">Life Remaining</div>
+		<button id="toggle">Toggle</button>
+	</div>
+
+	<script>
+		// Prompt the user for their date of birth and life expectancy
+		const birthDate = new Date(prompt("Enter your date of birth (YYYY-MM-DD):"));
+		const lifeExpectancy = prompt("Enter your life expectancy (in years):");
+
+		// Initialize the state of the widget
+		let showRemaining = true;
+
+		// Function to calculate the percentage of life remaining
+		function calculatePercentage() {
+			// Get the current date
+			const currentDate = new Date();
+
+			// Calculate the difference in milliseconds between the two dates
+			const diffInMs = currentDate - birthDate;
+
+			// Convert the difference to years
+			const years = diffInMs / (1000 * 60 * 60 * 24 * 365);
+
+			// Calculate the percentage of life remaining with 3 decimal places
+			let percentage;
+			if (showRemaining) {
+				const remainingYears = lifeExpectancy - years;
+				percentage = ((remainingYears / lifeExpectancy) * 100).toFixed(10);
+			} else {
+				percentage = ((years / lifeExpectancy) * 100).toFixed(10);
+			}
+
+			// Display the percentage in the HTML
+			document.getElementById("percentage").innerHTML = percentage + "%";
+		}
+
+		// Call the function initially
+		calculatePercentage();
+
+		// Refresh the widget every 5 seconds
+		setInterval(calculatePercentage, 500);
+
+		// Add event listener to toggle button
+		const toggleButton = document.getElementById("toggle");
+		toggleButton.addEventListener("click", function() {
+			showRemaining = !showRemaining;
+			if (showRemaining) {
+				document.querySelector(".label").innerHTML = "Life Remaining";
+			} else {
+				document.querySelector(".label").innerHTML = "Life Passed";
+			}
+			calculatePercentage();
+		});
+	</script>
+
+</body>
+</html>
