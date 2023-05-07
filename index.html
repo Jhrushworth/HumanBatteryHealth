@@ -1,87 +1,78 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<meta charset="utf-8">
-	<title>Life Remaining Widget</title>
-	<style>
-		.container {
-			display: flex;
-			flex-direction: column;
-			align-items: center;
-			font-family: Arial, sans-serif;
-		}
+    <meta charset="utf-8">
+    <title>Human Battery Health</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f8f8f8;
+        }
 
-		.percentage {
-			font-size: 5rem;
-			font-weight: bold;
-			color: #333;
-			margin-bottom: 0.5rem;
-		}
+        h1 {
+            color: #333;
+            font-size: 2.5rem;
+            text-align: center;
+            margin-top: 3rem;
+        }
 
-		.label {
-			font-size: 1.5rem;
-			color: #999;
-			margin-bottom: 1rem;
-		}
-	</style>
+        p {
+            color: #777;
+            font-size: 1.25rem;
+            text-align: center;
+            margin-top: 2rem;
+        }
+
+        form {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin-top: 2rem;
+        }
+
+        label {
+            color: #333;
+            font-size: 1.5rem;
+            margin-bottom: 0.5rem;
+        }
+
+        input[type="text"] {
+            font-size: 1.25rem;
+            padding: 0.5rem;
+            border-radius: 0.25rem;
+            border: 1px solid #ccc;
+            margin-bottom: 1rem;
+            width: 100%;
+            box-sizing: border-box;
+        }
+
+        input[type="submit"] {
+            background-color: #333;
+            color: #fff;
+            font-size: 1.25rem;
+            padding: 0.5rem 1rem;
+            border-radius: 0.25rem;
+            border: none;
+            cursor: pointer;
+            transition: background-color 0.3s ease-in-out;
+        }
+
+        input[type="submit"]:hover {
+            background-color: #555;
+        }
+    </style>
 </head>
 <body>
-	<div class="container">
-		<div class="percentage" id="percentage"></div>
-		<div class="label">Life Remaining</div>
-		<button id="toggle">Toggle</button>
-	</div>
-
-	<script>
-		// Prompt the user for their date of birth and life expectancy
-		const birthDate = new Date(prompt("Enter your date of birth (YYYY-MM-DD):"));
-		const lifeExpectancy = prompt("Enter your life expectancy (in years):");
-
-		// Initialize the state of the widget
-		let showRemaining = true;
-
-		// Function to calculate the percentage of life remaining
-		function calculatePercentage() {
-			// Get the current date
-			const currentDate = new Date();
-
-			// Calculate the difference in milliseconds between the two dates
-			const diffInMs = currentDate - birthDate;
-
-			// Convert the difference to years
-			const years = diffInMs / (1000 * 60 * 60 * 24 * 365);
-
-			// Calculate the percentage of life remaining with 3 decimal places
-			let percentage;
-			if (showRemaining) {
-				const remainingYears = lifeExpectancy - years;
-				percentage = ((remainingYears / lifeExpectancy) * 100).toFixed(10);
-			} else {
-				percentage = ((years / lifeExpectancy) * 100).toFixed(10);
-			}
-
-			// Display the percentage in the HTML
-			document.getElementById("percentage").innerHTML = percentage + "%";
-		}
-
-		// Call the function initially
-		calculatePercentage();
-
-		// Refresh the widget every 5 seconds
-		setInterval(calculatePercentage, 500);
-
-		// Add event listener to toggle button
-		const toggleButton = document.getElementById("toggle");
-		toggleButton.addEventListener("click", function() {
-			showRemaining = !showRemaining;
-			if (showRemaining) {
-				document.querySelector(".label").innerHTML = "Life Remaining";
-			} else {
-				document.querySelector(".label").innerHTML = "Life Passed";
-			}
-			calculatePercentage();
-		});
-	</script>
-
+    <h1>Welcome to Battery Health</h1>
+    <p>Please enter the following information:</p>
+    <form action="info.html" method="GET">
+        <label for="dob">Date of Birth (YYYY-MM-DD):</label>
+        <input type="text" id="dob" name="dob">
+        <label for="lifeExpectancy">Life Expectancy (in years):</label>
+        <input type="text" id="lifeExpectancy" name="lifeExpectancy">
+        <label for="sleepHours">Hours of Sleep Each Night:</label>
+        <input type="text" id="sleepHours" name="sleepHours">
+        <input type="submit" value="Submit">
+    </form>
 </body>
 </html>
